@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Popular Movies App</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_mostpopular">Most Popular</string>
+    <string name="action_highestrated">Highest Rated</string>
+    <string name="menu_sort">Sort Movies</string>
+    <string name="title_activity_movie_detail">Movie Detail</string>
+    <string name="action_settings">Settings</string>
+</resources>
