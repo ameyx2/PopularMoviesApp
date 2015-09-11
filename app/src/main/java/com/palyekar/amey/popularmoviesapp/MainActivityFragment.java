@@ -1,7 +1,12 @@
 package com.palyekar.amey.popularmoviesapp;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -25,7 +30,7 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 public class MainActivityFragment extends Fragment {
 
     private GridView gridview;
-    private static final String TmdbAPIKey =  "API_KEY";
+    private static final String TmdbAPIKey =  "fb822635b777a1da00cae23438ffb6da";
 
     //movieGridItem[] moviegriditems = new movieGridItem[] {};
     List<movieGridItem> moviegriditems = new ArrayList<movieGridItem>();
@@ -39,8 +44,15 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_main, container, false);
 
-        moviesAsyncTask atask = new moviesAsyncTask();
-        atask.execute();
+        if(!isConnected(getActivity())) {
+            buildDialog(getActivity()).show();
+        }
+        else {
+            moviesAsyncTask atask = new moviesAsyncTask();
+            atask.execute();
+        }
+/*        moviesAsyncTask atask = new moviesAsyncTask();
+        atask.execute();*/
 
         gridview = (GridView) v.findViewById(R.id.gridView);
        // ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1,fillArray);
@@ -62,6 +74,40 @@ public class MainActivityFragment extends Fragment {
         return v;
     }
 
+
+    public boolean isConnected(Context context) {
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = cm.getActiveNetworkInfo();
+
+        if (netinfo != null && netinfo.isConnectedOrConnecting()) {
+            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting())) {
+                return true;
+            }
+            else return false;
+        } else return false;
+    }
+
+    public AlertDialog.Builder buildDialog(Context c) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setTitle("No Internet connection.");
+        builder.setMessage("You have no internet connection");
+
+        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+            }
+        });
+
+        return builder;
+    }
 
     public class moviesAsyncTask extends AsyncTask<Void, Void, Void> {
         private String posterID;
