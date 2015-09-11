@@ -94,15 +94,16 @@ public class MainActivityFragment extends Fragment {
     public AlertDialog.Builder buildDialog(Context c) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
-        builder.setTitle("No Internet connection.");
-        builder.setMessage("You have no internet connection");
+        builder.setTitle("Internet");
+        builder.setMessage("No Internet Connection Found.\nPlease enable Internet connection on your device and try again.");
 
-        builder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
 
                 dialog.dismiss();
+                getActivity().finish();
             }
         });
 
