@@ -24,7 +24,7 @@ public class movieDetailActivityFragment extends Fragment {
 
     private ImageView l_iv_movieposter;
     private TextView l_tv_title, l_tv_vote, l_tv_synopsis, l_tv_release;
-    private static final String TmdbAPIKey =  "fb822635b777a1da00cae23438ffb6da";
+    private static final String TmdbAPIKey =  "API_KEY";
     private static final String posterUrlMain = "http://image.tmdb.org/t/p/w500/";
 
     public movieDetailActivityFragment() {

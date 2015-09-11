@@ -30,7 +30,7 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 public class MainActivityFragment extends Fragment {
 
     private GridView gridview;
-    private static final String TmdbAPIKey =  "fb822635b777a1da00cae23438ffb6da";
+    private static final String TmdbAPIKey =  "API_KEY";
 
     //movieGridItem[] moviegriditems = new movieGridItem[] {};
     List<movieGridItem> moviegriditems = new ArrayList<movieGridItem>();
