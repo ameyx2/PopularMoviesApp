@@ -30,7 +30,7 @@ import info.movito.themoviedbapi.model.core.MovieResultsPage;
 public class MainActivityFragment extends Fragment {
 
     private GridView gridview;
-    private static final String TmdbAPIKey =  "API_KEY";
+    private static final String TmdbAPIKey =  "fb822635b777a1da00cae23438ffb6da";
 
     //movieGridItem[] moviegriditems = new movieGridItem[] {};
     List<movieGridItem> moviegriditems = new ArrayList<movieGridItem>();
@@ -94,10 +94,10 @@ public class MainActivityFragment extends Fragment {
     public AlertDialog.Builder buildDialog(Context c) {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(c);
-        builder.setTitle("Internet");
-        builder.setMessage("No Internet Connection Found.\nPlease enable Internet connection on your device and try again.");
+        builder.setTitle(R.string.nointernettitle);
+        builder.setMessage(R.string.nointernetmsg);
 
-        builder.setPositiveButton("Close", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.nointernetpopupbtnclose, new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface dialog, int which) {
@@ -133,19 +133,19 @@ public class MainActivityFragment extends Fragment {
             Long pref = settings.getLong("SortOrder", 0);
 
             if (pref == R.id.action_mostpopular) {
-                movies = new TmdbApi(TmdbAPIKey).getMovies().getPopularMovieList("en", 1);
+                movies = new TmdbApi(TmdbAPIKey).getMovies().getPopularMovieList(getActivity().getString(R.string.tmdblanguageEN), 1);
             }
             else if (pref == R.id.action_highestrated) {
-                movies = new TmdbApi(TmdbAPIKey).getMovies().getTopRatedMovies("en", 1);
+                movies = new TmdbApi(TmdbAPIKey).getMovies().getTopRatedMovies(getActivity().getString(R.string.tmdblanguageEN), 1);
             } else {
-                movies = new TmdbApi(TmdbAPIKey).getMovies().getPopularMovieList("en", 1);
+                movies = new TmdbApi(TmdbAPIKey).getMovies().getPopularMovieList(getActivity().getString(R.string.tmdblanguageEN), 1);
             }
 
 
             List<MovieDb> mlist = movies.getResults();
             moviegriditems.clear();
             for (MovieDb movie : mlist) {
-                posterID = "http://image.tmdb.org/t/p/w185/" + movie.getPosterPath();
+                posterID = getActivity().getString(R.string.tmdbimgurlw185) + movie.getPosterPath();
                 moviename = movie.getTitle();
                 movieid = movie.getId();
                 //Log.d("Movies", "moviesx1" + posterID + " " + moviename + " " + movieid);

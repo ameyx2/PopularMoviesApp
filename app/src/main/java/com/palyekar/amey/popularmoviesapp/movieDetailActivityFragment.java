@@ -1,6 +1,11 @@
 package com.palyekar.amey.popularmoviesapp;
 
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -24,7 +29,7 @@ public class movieDetailActivityFragment extends Fragment {
 
     private ImageView l_iv_movieposter;
     private TextView l_tv_title, l_tv_vote, l_tv_synopsis, l_tv_release;
-    private static final String TmdbAPIKey =  "API_KEY";
+    private static final String TmdbAPIKey =  "fb822635b777a1da00cae23438ffb6da";
     private static final String posterUrlMain = "http://image.tmdb.org/t/p/w500/";
 
     public movieDetailActivityFragment() {
@@ -43,13 +48,50 @@ public class movieDetailActivityFragment extends Fragment {
             movieNameId = myIntent.getIntExtra("movieNameId", 0);
             Log.d("Album", "Album2" + movieNameId);
         }
-
-        moviesAsyncTask atask = new moviesAsyncTask();
-        atask.execute(movieNameId);
-
-
+        if(!isConnected(getActivity())) {
+            buildDialog(getActivity()).show();
+        }
+        else {
+            moviesAsyncTask atask = new moviesAsyncTask();
+            atask.execute(movieNameId);
+        }
 
         return rootview;
+    }
+
+    public boolean isConnected(Context context) {
+
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netinfo = cm.getActiveNetworkInfo();
+
+        if (netinfo != null && netinfo.isConnectedOrConnecting()) {
+            android.net.NetworkInfo wifi = cm.getNetworkInfo(ConnectivityManager.TYPE_WIFI);
+            android.net.NetworkInfo mobile = cm.getNetworkInfo(ConnectivityManager.TYPE_MOBILE);
+
+            if((mobile != null && mobile.isConnectedOrConnecting()) || (wifi != null && wifi.isConnectedOrConnecting())) {
+                return true;
+            }
+            else return false;
+        } else return false;
+    }
+
+    public AlertDialog.Builder buildDialog(Context c) {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(c);
+        builder.setTitle(R.string.nointernettitle);
+        builder.setMessage(R.string.nointernetmsg);
+
+        builder.setPositiveButton(R.string.nointernetpopupbtnclose, new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                dialog.dismiss();
+                getActivity().finish();
+            }
+        });
+
+        return builder;
     }
 
     public class moviesAsyncTask extends AsyncTask<Integer, Void, movieDetails> {

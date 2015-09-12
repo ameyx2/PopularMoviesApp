@@ -6,4 +6,9 @@
     <string name="menu_sort">Sort Movies</string>
     <string name="title_activity_movie_detail">Movie Detail</string>
     <string name="action_settings">Settings</string>
+    <string name="nointernetmsg">No Internet Connection Found.\nEnable Internet connection on your device and try again.</string>
+    <string name="nointernettitle">Internet Offline</string>
+    <string name="nointernetpopupbtnclose">Close</string>
+    <string name="tmdblanguageEN">en</string>
+    <string name="tmdbimgurlw185">http://image.tmdb.org/t/p/w185/</string>
 </resources>
