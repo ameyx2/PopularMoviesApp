@@ -9,7 +9,7 @@ public class movieGridItem {
     public String movieName;
     public int id;
 
-    movieGridItem (String pimgURL, String pmname, int pid){
+    public movieGridItem (String pimgURL, String pmname, int pid){
         this.posterimageURL = pimgURL;
         this.movieName = pmname;
         this.id = pid;

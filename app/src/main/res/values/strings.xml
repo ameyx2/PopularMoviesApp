@@ -3,6 +3,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_mostpopular">Most Popular</string>
     <string name="action_highestrated">Highest Rated</string>
+    <string name="action_favorites">My Favorites</string>
     <string name="menu_sort">Sort Movies</string>
     <string name="title_activity_movie_detail">Movie Detail</string>
     <string name="action_settings">Settings</string>
@@ -11,4 +12,7 @@
     <string name="nointernetpopupbtnclose">Close</string>
     <string name="tmdblanguageEN">en</string>
     <string name="tmdbimgurlw185">http://image.tmdb.org/t/p/w185/</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

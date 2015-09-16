@@ -11,6 +11,7 @@ public class MainActivity extends ActionBarActivity {
 
     private MenuItem menu_mostpopular;
     private MenuItem menu_highestrated;
+    private MenuItem menu_favorites;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +26,23 @@ public class MainActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.menu_main, menu);
         menu_mostpopular = menu.getItem(0).getSubMenu().getItem(0);
         menu_highestrated = menu.getItem(0).getSubMenu().getItem(1);
+        menu_favorites = menu.getItem(0).getSubMenu().getItem(2);
 
         SharedPreferences settings = this.getSharedPreferences("PREFS_NAME", 0);
         Long pref = settings.getLong("SortOrder", 0);
 
         if (pref == R.id.action_mostpopular) {
             menu_mostpopular.setEnabled(false);
+            menu_favorites.setEnabled(true);
             menu_highestrated.setEnabled(true);
         }
         else if (pref == R.id.action_highestrated) {
             menu_highestrated.setEnabled(false);
+            menu_favorites.setEnabled(true);
+            menu_mostpopular.setEnabled(true);
+        } else if (pref == R.id.action_favorites) {
+            menu_highestrated.setEnabled(true);
+            menu_favorites.setEnabled(false);
             menu_mostpopular.setEnabled(true);
         }
 
@@ -59,6 +67,11 @@ public class MainActivity extends ActionBarActivity {
         }
         if (id == R.id.action_highestrated) {
             editor.putLong("SortOrder", R.id.action_highestrated).commit();
+            this.recreate();
+            return true;
+        }
+        if (id == R.id.action_favorites) {
+            editor.putLong("SortOrder", R.id.action_favorites).commit();
             this.recreate();
             return true;
         }
